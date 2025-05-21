@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global AI News</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Latest AI News</h1>
+    </header>
+
+    <main>
+        {% if error_message %}
+            <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+
+        {% if articles and not error_message %}
+            <ul class="news-list">
+                {% for article in articles %}
+                    <li>
+                        <h2><a href="{{ article.link }}" target="_blank">{{ article.title }}</a></h2>
+                        <p class="metadata">
+                            Source: {{ article.source }} | Published: {{ article.publication_date }}
+                        </p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% elif not articles and not error_message %}
+            <p>No news articles found. Try running the scraper script (<code>python app/scraper.py</code>) first.</p>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 AI News Aggregator</p>
+    </footer>
+</body>
+</html>
